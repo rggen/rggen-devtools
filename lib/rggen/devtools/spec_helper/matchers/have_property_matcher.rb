@@ -4,21 +4,39 @@ module RgGen
   module Devtools
     module SpecHelper
       module Matchers
-        matcher :have_property do |property, value|
-          match do |component|
-            @no_property = !component.respond_to?(property)
-            @no_property && (return flase)
-            @actual = component.public_send(property)
-            @actual == value
+        matcher :have_property do |property, *value|
+          match do |component_or_feature|
+            case component_or_feature
+            when Class
+              @property_defined =
+                component_or_feature
+                  .public_instance_methods(false)
+                  .include?(property)
+              @value_matched = true
+            else
+              @property_defined =
+                component_or_feature
+                  .public_methods(false)
+                  .include?(property)
+              @value_matched =
+                value.empty? || compare_value(component_or_feature)
+            end
+            @property_defined && @value_matched
           end
 
           failure_message do
-            if @no_property
-              "no such property: #{property}"
-            else
-              "expected #{property} to be #{value.inspect} " \
-              "but got #{@actual.inspect}"
+            if !@property_defined
+              "no such property is defined: #{property}"
+            elsif !@value_matched
+              "expected #{property} to be #{value[0].inspect} " \
+              "but got #{@actual_value.inspect}"
             end
+          end
+
+          define_method(:compare_value) do |component_or_feature|
+            return false unless @property_defined
+            @actual_value = component_or_feature.public_send(property)
+            values_match?(value[0], @actual_value)
           end
         end
 
