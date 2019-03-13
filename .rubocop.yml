@@ -1,0 +1,26 @@
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - spec/**/*
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/OptionalArguments:
+  Exclude:
+    - lib/rggen/core/input_base/input_data.rb
+
+Style/RaiseArgs:
+  EnforcedStyle: compact
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
