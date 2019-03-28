@@ -16,12 +16,8 @@ module RgGen
 
       def apply_default_config(config)
         config.example_status_persistence_file_path = '.rspec_status'
-        config.expect_with(:rspec) do |expectations|
-          expectations.syntax = :expect
-        end
-        config.mock_with(:rspec) do |mocks|
-          mocks.syntax = :expect
-        end
+        config.order = :random
+        Kernel.srand(config.seed)
       end
 
       def setup_helpers(config)
@@ -42,8 +38,8 @@ module RgGen
       end
 
       def setup(config, coverage_filter: nil)
-        apply_default_config(config)
         setup_helpers(config)
+        apply_default_config(config)
         ENV.key?('COVERAGE') &&
           setup_coverage(ENV.key?('USE_CODECOV'), coverage_filter)
       end
