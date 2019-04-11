@@ -8,6 +8,7 @@ require_relative 'spec_helper/matchers/have_property_matcher'
 require_relative 'spec_helper/matchers/have_value_matcher'
 require_relative 'spec_helper/matchers/match_string_matcher'
 require_relative 'spec_helper/matchers/match_value_matcher'
+require_relative 'spec_helper/matchers/raise_rggen_error_matcher'
 
 module RgGen
   module Devtools
