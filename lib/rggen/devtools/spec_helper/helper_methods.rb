@@ -23,6 +23,19 @@ module RgGen
           pattern.random_example
         end
 
+        def random_strings(pattern, number_of_results)
+          strings = []
+          until strings.size == number_of_results
+            result = pattern.random_example
+            if strings.include?(result)
+              next
+            else
+              strings << result
+            end
+          end
+          strings
+        end
+
         def random_file_extensions(max_length: 3, exceptions: nil)
           Array.new(max_length) do |i|
             loop do
