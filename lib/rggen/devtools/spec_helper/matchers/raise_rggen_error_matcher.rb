@@ -4,7 +4,7 @@ module RgGen
   module Devtools
     module SpecHelper
       module Matchers
-        matcher :raise_rggen_error do |error_type, message, additional_info = nil|
+        matcher :raise_rggen_error do |error_type, message = nil, additional_info = nil|
           supports_block_expectations
 
           match do |block|
@@ -26,14 +26,16 @@ module RgGen
               end
 
             return false unless @expected_error_raised
-            return false if @actual_message != @expected_message
+            return false if @expected_message && (@actual_message != @expected_message)
             true
           end
 
           failure_message do
-            if !@expected_error_raised
+            if !@expected_error_raised && @expected_message
               "expected #{error_type} with '#{@expected_message}' " \
               'to be raised but it was not raised'
+            elsif !@expected_error_raised
+              "expected #{error_type} to be raised but it was not raised"
             else
               "#{error_type} was raised but error message is not matched\n" \
               "  expected message: #{@expected_message}\n" \
