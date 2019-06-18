@@ -108,3 +108,38 @@ RSpec.shared_context 'register map common' do
     @register_map_factory ||= []
   end
 end
+
+RSpec.shared_context 'sv rtl common' do
+  include_context 'configuration common'
+  include_context 'register map common'
+
+  def build_sv_rtl_factory(builder)
+    builder.build_factory(:output, :sv_rtl)
+  end
+
+  def create_sv_rtl(configuration = nil, &data_block)
+    register_map = create_register_map(configuration) do
+      register_block(&data_block)
+    end
+    @sv_rtl_facotry[0] ||= build_sv_rtl_factory(RgGen.builder)
+    @sv_rtl_facotry[0].create(configuration || default_configuration, register_map)
+  end
+
+  def delete_sv_rtl_factory
+    @sv_rtl_facotry.clear
+  end
+
+  def have_port(domain, handler, **atributes, &body)
+    port = RgGen::SystemVerilog::Utility::DataObject.new(:argument, **atributes, &body)
+    have_declaration(domain, :port, port.declaration).and have_identifier(handler, port.identifier)
+  end
+
+  def have_interface(domain, handler, **atributes, &body)
+    interface = RgGen::SystemVerilog::Utility::InterfaceInstance.new(**atributes, &body)
+    have_declaration(domain, :variable, interface.declaration).and have_identifier(handler, interface.identifier)
+  end
+
+  before(:all) do
+    @sv_rtl_facotry ||= []
+  end
+end

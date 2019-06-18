@@ -10,7 +10,7 @@ module RgGen
               if component_or_feature.respond_to?(accsessor)
                 component_or_feature.__send__(accsessor)
               end
-            @actual_identifier && values_match?(@actual_identifier.to_s, name)
+            @actual_identifier && values_match?(@actual_identifier.to_s, name.to_s)
           end
 
           failure_message do
