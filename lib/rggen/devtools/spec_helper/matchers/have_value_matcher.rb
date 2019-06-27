@@ -7,7 +7,7 @@ module RgGen
         matcher :have_value do |name, value = nil, position = nil|
           match do |data|
             @actual = data[name]
-            return false if @actual.equal?(Core::InputBase::NilValue)
+            return false if @actual.equal?(Core::InputBase::NAValue)
             return false unless Core::InputBase::InputValue === @actual
             return false if value && @actual.value != value
             return false if position && !match_position?(@actual.position, position)
