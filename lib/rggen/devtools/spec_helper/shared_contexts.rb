@@ -90,7 +90,7 @@ RSpec.shared_context 'register map common' do
     raise_rggen_error(RgGen::Core::RegisterMap::RegisterMapError, message, position)
   end
 
-  def delete_register_map_facotry
+  def delete_register_map_factory
     @register_map_factory.clear
   end
 
