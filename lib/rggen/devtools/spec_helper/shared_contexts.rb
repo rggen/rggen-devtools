@@ -129,18 +129,23 @@ RSpec.shared_context 'sv rtl common' do
     @sv_rtl_facotry.clear
   end
 
-  def have_port(domain, handler, **atributes, &body)
-    port = RgGen::SystemVerilog::Utility::DataObject.new(:argument, **atributes, &body)
+  def have_port(domain, handler, **attributes, &body)
+    port = RgGen::SystemVerilog::Utility::DataObject.new(:argument, **attributes, &body)
     have_declaration(domain, :port, port.declaration).and have_identifier(handler, port.identifier)
   end
 
-  def have_interface(domain, handler, **atributes, &body)
-    interface = RgGen::SystemVerilog::Utility::InterfaceInstance.new(**atributes, &body)
+  def not_have_port(domain, handler, **attributes, &body)
+    port = RgGen::SystemVerilog::Utility::DataObject.new(:argument, **attributes, &body)
+    not_have_declaration(domain, :port, port.declaration).and not_have_identifier(handler)
+  end
+
+  def have_interface(domain, handler, **attributes, &body)
+    interface = RgGen::SystemVerilog::Utility::InterfaceInstance.new(**attributes, &body)
     have_declaration(domain, :variable, interface.declaration).and have_identifier(handler, interface.identifier)
   end
 
-  def not_have_interface(domain, handler, **atributes, &body)
-    interface = RgGen::SystemVerilog::Utility::InterfaceInstance.new(**atributes, &body)
+  def not_have_interface(domain, handler, **attributes, &body)
+    interface = RgGen::SystemVerilog::Utility::InterfaceInstance.new(**attributes, &body)
     not_have_declaration(domain, :variable, interface.declaration).and not_have_identifier(handler)
   end
 
