@@ -144,6 +144,11 @@ RSpec.shared_context 'sv rtl common' do
     have_declaration(domain, :port, port.declaration).and have_identifier(handler, port.identifier)
   end
 
+  def have_variable(domain, handler, **attributes, &body)
+    variable = RgGen::SystemVerilog::Utility::DataObject.new(:variable, **attributes, &body)
+    have_declaration(domain, :variable, variable.declaration).and have_identifier(handler, variable.identifier)
+  end
+
   def have_interface(domain, handler, **attributes, &body)
     interface = RgGen::SystemVerilog::Utility::InterfaceInstance.new(**attributes, &body)
     have_declaration(domain, :variable, interface.declaration).and have_identifier(handler, interface.identifier)
