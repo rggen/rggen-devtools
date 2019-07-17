@@ -27,9 +27,9 @@ RSpec.shared_context 'configuration common' do
     end
   end
 
-  def build_configuration_factory(builder)
+  def build_configuration_factory(builder, enable_dummy_loader = true)
     factory = builder.build_factory(:input, :configuration)
-    factory.loaders([ConfigurationDummyLoader])
+    factory.loaders([ConfigurationDummyLoader]) if enable_dummy_loader
     factory
   end
 
@@ -74,9 +74,9 @@ RSpec.shared_context 'register map common' do
     end
   end
 
-  def build_register_map_factory(builder)
+  def build_register_map_factory(builder, enable_dummy_loader = true)
     factory = builder.build_factory(:input, :register_map)
-    factory.loaders([RegisterMapDummyLoader])
+    factory.loaders([RegisterMapDummyLoader]) if enable_dummy_loader
     factory
   end
 

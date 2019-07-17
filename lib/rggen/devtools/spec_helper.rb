@@ -14,6 +14,7 @@ require_relative 'spec_helper/matchers/match_identifier_matcher'
 require_relative 'spec_helper/matchers/match_string_matcher'
 require_relative 'spec_helper/matchers/match_value_matcher'
 require_relative 'spec_helper/matchers/raise_rggen_error_matcher'
+require_relative 'spec_helper/matchers/write_file_matcher'
 require_relative 'spec_helper/shared_contexts'
 
 module RgGen
