@@ -159,6 +159,11 @@ RSpec.shared_context 'sv rtl common' do
     not_have_declaration(domain, :variable, interface.declaration).and not_have_identifier(handler)
   end
 
+  def have_parameter(domain, handler, **attributes, &body)
+    parameter = RgGen::SystemVerilog::Utility::DataObject.new(:parameter, **attributes, &body)
+    have_declaration(domain, :parameter, parameter.declaration).and have_identifier(handler, parameter.identifier)
+  end
+
   before(:all) do
     @sv_rtl_facotry ||= []
   end
