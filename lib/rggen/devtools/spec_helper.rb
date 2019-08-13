@@ -3,18 +3,6 @@
 require 'regexp-examples'
 require_relative 'spec_helper/helper_methods'
 require_relative 'spec_helper/matchers'
-require_relative 'spec_helper/matchers/exit_with_code_matcher'
-require_relative 'spec_helper/matchers/generate_code_matcher'
-require_relative 'spec_helper/matchers/have_declaration_matcher'
-require_relative 'spec_helper/matchers/have_identifier_matcher'
-require_relative 'spec_helper/matchers/have_property_matcher'
-require_relative 'spec_helper/matchers/have_value_matcher'
-require_relative 'spec_helper/matchers/match_declaration_matcher'
-require_relative 'spec_helper/matchers/match_identifier_matcher'
-require_relative 'spec_helper/matchers/match_string_matcher'
-require_relative 'spec_helper/matchers/match_value_matcher'
-require_relative 'spec_helper/matchers/raise_rggen_error_matcher'
-require_relative 'spec_helper/matchers/write_file_matcher'
 require_relative 'spec_helper/shared_contexts'
 
 module RgGen
