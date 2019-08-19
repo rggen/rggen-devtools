@@ -44,7 +44,7 @@ RSpec.shared_context 'configuration common' do
     raise_rggen_error(RgGen::Core::Configuration::ConfigurationError, message, position)
   end
 
-  def delete_configuration_facotry
+  def delete_configuration_factory
     @configuration_factory.clear
   end
 
@@ -121,12 +121,12 @@ RSpec.shared_context 'sv rtl common' do
     register_map = create_register_map(configuration) do
       register_block(&data_block)
     end
-    @sv_rtl_facotry[0] ||= build_sv_rtl_factory(RgGen.builder)
-    @sv_rtl_facotry[0].create(configuration || default_configuration, register_map)
+    @sv_rtl_factory[0] ||= build_sv_rtl_factory(RgGen.builder)
+    @sv_rtl_factory[0].create(configuration || default_configuration, register_map)
   end
 
   def delete_sv_rtl_factory
-    @sv_rtl_facotry.clear
+    @sv_rtl_factory.clear
   end
 
   def have_port(domain, handler, **attributes, &body)
@@ -165,7 +165,7 @@ RSpec.shared_context 'sv rtl common' do
   end
 
   before(:all) do
-    @sv_rtl_facotry ||= []
+    @sv_rtl_factory ||= []
   end
 end
 
@@ -201,5 +201,30 @@ RSpec.shared_context 'sv ral common' do
 
   before(:all) do
     @sv_ral_factory ||= []
+  end
+end
+
+RSpec.shared_context 'markdown common' do
+  include_context 'configuration common'
+  include_context 'register map common'
+
+  def build_markdown_factory(builder)
+    builder.build_factory(:output, :markdown)
+  end
+
+  def create_markdown(configuraiton = nil, &data_block)
+    register_map = create_register_map(configuraiton) do
+      register_block(&data_block)
+    end
+    @markdown_factory[0] ||= build_markdown_factory(RgGen.builder)
+    @markdown_factory[0].create(configuraiton || default_configuration, register_map)
+  end
+
+  def delete_markdown_factory
+    @markdown_factory.clear
+  end
+
+  before(:all) do
+    @markdown_factory ||= []
   end
 end
