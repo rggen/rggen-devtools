@@ -4,7 +4,7 @@ module RgGen
   module Devtools
     module SpecHelper
       module Matchers
-        matcher :have_property do |property, *value|
+        matcher :have_property do |property, *args_and_value|
           match do |component_or_feature|
             case component_or_feature
             when Class
@@ -18,8 +18,7 @@ module RgGen
                 component_or_feature
                   .public_methods(false)
                   .include?(property)
-              @value_matched =
-                value.empty? || compare_value(component_or_feature)
+              @value_matched = compare_value(component_or_feature, args_and_value)
             end
             @property_defined && @value_matched
           end
@@ -28,15 +27,17 @@ module RgGen
             if !@property_defined
               "no such property is defined: #{property}"
             elsif !@value_matched
-              "expected #{property} to be #{value[0].inspect} " \
+              "expected #{property} to be #{args_and_value[-1].inspect} " \
               "but got #{@actual_value.inspect}"
             end
           end
 
-          define_method(:compare_value) do |component_or_feature|
+          define_method(:compare_value) do |component_or_feature, args_and_value|
             return false unless @property_defined
-            @actual_value = component_or_feature.public_send(property)
-            values_match?(value[0], @actual_value)
+            return true if args_and_value.empty?
+            args = args_and_value.size == 2 ? args_and_value[0] : nil
+            @actual_value = component_or_feature.public_send(property, *args)
+            values_match?(args_and_value[-1], @actual_value)
           end
         end
 
