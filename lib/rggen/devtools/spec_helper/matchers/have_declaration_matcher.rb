@@ -7,10 +7,10 @@ module RgGen
         matcher :have_declaration do |*args|
           match do |component|
             @target, @layer, @type, @expected_declaration =
-              if args.size == 3 && component.layer == args.first
-                [component, *args[0..2]]
-              elsif args.size == 3
+              if args.size == 3 && args.first
                 [component.__send__(args.first), *args[0..2]]
+              elsif args.size == 3
+                [component, component.layer, *args[1..2]]
               else
                 [component, component.layer, *args[0..1]]
               end
