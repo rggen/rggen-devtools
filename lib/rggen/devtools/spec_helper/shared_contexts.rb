@@ -107,6 +107,14 @@ RSpec.shared_context 'register map common' do
   before(:all) do
     @register_map_factory ||= []
   end
+
+  before(:all) do
+    RgGen::Core::RegisterMap::ComponentFactory.disable_no_children_error
+  end
+
+  after(:all) do
+    RgGen::Core::RegisterMap::ComponentFactory.enable_no_children_error
+  end
 end
 
 RSpec.shared_context 'sv rtl common' do
