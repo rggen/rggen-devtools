@@ -4,11 +4,11 @@ module RgGen
   module Devtools
     module SpecHelper
       module Matchers
-        matcher :generate_code do |scope, mode, expected_code|
+        matcher :generate_code do |*args, expected_code|
           diffable
 
           match do |component|
-            @actual = generate_code(component, scope, mode)
+            @actual = generate_code(component, args)
             @actual.include?(expected_code)
           end
 
@@ -18,9 +18,9 @@ module RgGen
             'generated code is not matched with expected code'
           end
 
-          def generate_code(component, scope, mode)
+          def generate_code(component, args)
             code = Core::Utility::CodeUtility::CodeBlock.new
-            component.generate_code(scope, mode, code)
+            component.generate_code(code, *args)
             code.to_s
           end
         end
