@@ -21,23 +21,17 @@ module RgGen
         config.include RgGen::Devtools::SpecHelper::Matchers
       end
 
-      def setup_coverage(use_codecov, filter)
+      def setup_coverage(filter)
         require 'simplecov'
         SimpleCov.start do
           filter && add_filter(Array(filter))
         end
-
-        return unless use_codecov
-
-        require 'codecov'
-        SimpleCov.formatter = SimpleCov::Formatter::Codecov
       end
 
       def setup(config, coverage_filter: nil)
         setup_helpers(config)
         apply_default_config(config)
-        ENV.key?('COVERAGE') &&
-          setup_coverage(ENV.key?('USE_CODECOV'), coverage_filter)
+        ENV.key?('COVERAGE') && setup_coverage(coverage_filter)
       end
     end
   end

@@ -36,7 +36,6 @@ module RgGen
         desc 'Run all RSpec code examples and collect coverage'
         task name do
           ENV['COVERAGE'] = 'yes'
-          ENV.key?('CODECOV_TOKEN') && (ENV['USE_CODECOV'] = 'yes')
           Rake::Task[spec_task.to_s].execute
         end
       end

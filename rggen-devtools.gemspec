@@ -19,7 +19,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'bundler'
-  spec.add_dependency 'codecov'
   spec.add_dependency 'rake'
   spec.add_dependency 'regexp-examples'
   spec.add_dependency 'rspec'
