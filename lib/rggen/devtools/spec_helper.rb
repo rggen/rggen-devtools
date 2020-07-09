@@ -26,6 +26,11 @@ module RgGen
         SimpleCov.start do
           filter && add_filter(Array(filter))
         end
+
+        ENV.key?('CI') || return
+
+        require 'simplecov-cobertura'
+        SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
       end
 
       def setup(config, coverage_filter: nil)
