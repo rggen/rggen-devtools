@@ -9,27 +9,25 @@ end
 RSpec.shared_context 'configuration common' do
   class ConfigurationDummyLoader < RgGen::Core::Configuration::Loader
     class << self
-      def support?(_file)
-        true
-      end
-
       attr_accessor :values
       attr_accessor :data_block
     end
 
-    def load_file(_file)
-      if self.class.values.size.positive?
+    def support?(_file)
+      true
+    end
+
+    def load_file(_file, input_data, _valid_value_lists)
+      self.class.values.size.positive? &&
         input_data.values(self.class.values)
-      end
-      if self.class.data_block
+      self.class.data_block &&
         input_data.__send__(:build_by_block, self.class.data_block)
-      end
     end
   end
 
   def build_configuration_factory(builder, enable_dummy_loader = true)
     factory = builder.build_factory(:input, :configuration)
-    factory.loaders([ConfigurationDummyLoader]) if enable_dummy_loader
+    factory.loaders([ConfigurationDummyLoader.new([], {})]) if enable_dummy_loader
     factory
   end
 
@@ -62,21 +60,21 @@ RSpec.shared_context 'register map common' do
 
   class RegisterMapDummyLoader < RgGen::Core::RegisterMap::Loader
     class << self
-      def support?(_file)
-        true
-      end
-
       attr_accessor :data_block
     end
 
-    def load_file(_file)
+    def support?(_file)
+      true
+    end
+
+    def load_file(_file, input_data, _valid_value_lists)
       input_data.__send__(:build_by_block, self.class.data_block)
     end
   end
 
   def build_register_map_factory(builder, enable_dummy_loader = true)
     factory = builder.build_factory(:input, :register_map)
-    factory.loaders([RegisterMapDummyLoader]) if enable_dummy_loader
+    factory.loaders([RegisterMapDummyLoader.new([], {})]) if enable_dummy_loader
     factory
   end
 
