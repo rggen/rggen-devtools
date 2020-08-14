@@ -48,7 +48,7 @@ module RgGen
 
         def load_setup_files(builder, files)
           files.each { |file| load file }
-          builder.activate_plugins(no_default_setup: true)
+          builder.plugin_manager.activate_plugins(no_default_setup: true)
         end
       end
     end
