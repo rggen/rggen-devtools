@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files lib LICENSE.txt README.md`.split($RS)
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'bump'
   spec.add_dependency 'bundler'
   spec.add_dependency 'rake'
   spec.add_dependency 'regexp-examples'
