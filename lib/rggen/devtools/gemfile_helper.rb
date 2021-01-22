@@ -15,8 +15,18 @@ module RgGen
 
       def gem_rggen(gem_name, add_group: true)
         options = {}
-        options[:path] = File.join(rggen_root, gem_name)
-        options[:group] = :rggen_root if add_group
+
+        path = File.join(rggen_root, gem_name)
+        if Dir.exist?(path)
+          options[:path] = path
+        elsif ENV['CI']
+          options[:github] = "rggen/#{gem_name}"
+        end
+
+        if add_group
+          options[:group] = :rggen
+        end
+
         gem gem_name, **options
       end
 

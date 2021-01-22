@@ -19,9 +19,13 @@ module RgGen
         ENV['RGGEN_BRANCH'] || `git branch --show-current`.chomp
       end
 
+      def devtools_root
+        File.expand_path('../../../', __dir__)
+      end
+
       def rggen_root
         @rggen_root ||=
-          (ENV['RGGEN_ROOT'] || File.expand_path('..', repository_root))
+          (ENV['RGGEN_ROOT'] || File.expand_path('../', devtools_root))
       end
 
       def read_checkout_list
