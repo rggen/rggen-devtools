@@ -21,7 +21,7 @@ RSpec.shared_context 'configuration common' do
       self.class.values.size.positive? &&
         input_data.values(self.class.values)
       self.class.data_block &&
-        input_data.__send__(:build_by_block, self.class.data_block)
+        input_data.__send__(:build_by_block, &self.class.data_block)
     end
   end
 
@@ -68,7 +68,7 @@ RSpec.shared_context 'register map common' do
     end
 
     def load_file(_file, input_data, _valid_value_lists)
-      input_data.__send__(:build_by_block, self.class.data_block)
+      input_data.__send__(:build_by_block, &self.class.data_block)
     end
   end
 
