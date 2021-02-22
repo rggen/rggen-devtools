@@ -36,13 +36,18 @@ module RgGen
       def find_checkout_list
         root = rggen_root
         repository = repository_name
-        [branch_name, 'master']
-          .map { |branch| checkout_list_path(root, repository, branch) }
+        [*checkout_lists(root, repository), default_checkout_list(root, repository)]
           .find(&File.method(:exist?))
       end
 
-      def checkout_list_path(root, repository, branch)
-        File.join(root, 'rggen-checkout', repository, "#{branch}.yml")
+      def checkout_lists(root, repository)
+        [branch_name, 'master'].map do |branch|
+          File.join(root, 'rggen-checkout', repository, "#{branch}.yml")
+        end
+      end
+
+      def default_checkout_list(root, repository)
+        File.join(root, repository, 'rggen_checkout.yml')
       end
     end
   end
