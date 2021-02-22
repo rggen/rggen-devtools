@@ -13,14 +13,15 @@ module RgGen
         end
       end
 
-      def gem_rggen(gem_name, add_group: true)
+      def gem_rggen(repository, add_group: true)
         options = {}
 
+        gem_name = extract_gem_name(repository)
         path = File.join(rggen_root, gem_name)
         if Dir.exist?(path)
           options[:path] = path
         elsif ENV['CI']
-          options[:github] = "rggen/#{gem_name}"
+          options[:github] = repository
         end
 
         if add_group
@@ -51,7 +52,12 @@ module RgGen
 
       private
 
-      def rggen_gem?(gem_name)
+      def extract_gem_name(repository)
+        File.basename(repository)
+      end
+
+      def rggen_gem?(repository)
+        gem_name = extract_gem_name(repository)
         spec_path = File.join(rggen_root, gem_name, "#{gem_name}.gemspec")
         File.exist?(spec_path)
       end
