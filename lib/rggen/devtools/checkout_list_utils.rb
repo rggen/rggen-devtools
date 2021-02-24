@@ -28,8 +28,8 @@ module RgGen
           (ENV['RGGEN_ROOT'] || File.expand_path('../', devtools_root))
       end
 
-      def read_checkout_list
-        list = find_checkout_list
+      def read_checkout_list(list_file = nil)
+        list = list_file || find_checkout_list
         list && YAML.load_file(list) || nil
       end
 
