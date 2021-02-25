@@ -16,7 +16,7 @@ module RgGen
       end
 
       def branch_name
-        ENV['RGGEN_BRANCH'] || `git branch --show-current`.chomp
+        ENV['RGGEN_BRANCH'] || `git rev-parse --abbrev-ref HEAD`.chomp
       end
 
       def devtools_root
