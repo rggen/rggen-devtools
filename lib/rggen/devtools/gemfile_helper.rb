@@ -31,7 +31,7 @@ module RgGen
         gem gem_name, **options
       end
 
-      def gem_patched(gem_name, group: nil)
+      def gem_patched(gem_name, group: nil, branch: nil)
         return unless ENV['USE_GEM_PATCHED_LOCALLY'] == 'yes'
 
         options = {}
@@ -41,6 +41,7 @@ module RgGen
           options[:path] = path
         else
           options[:github] = "taichi-ishitani/#{gem_name}"
+          options[:branch] = branch if branch
         end
 
         if group
