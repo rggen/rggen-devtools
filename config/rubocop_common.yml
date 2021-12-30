@@ -20,6 +20,9 @@ Layout/MultilineMethodCallIndentation:
 Layout/SpaceBeforeBrackets:
   Enabled: false
 
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: false
+
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
 
