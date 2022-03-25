@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage = 'https://github.com/rggen/rggen-devtools'
   spec.license = 'MIT'
 
-  spec.files = `git ls-files lib LICENSE.txt README.md`.split($RS)
+  spec.files = `git ls-files lib LICENSE.txt`.split($RS)
   spec.require_paths = ['lib']
 
   spec.add_dependency 'bundler'
