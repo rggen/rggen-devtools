@@ -9,7 +9,8 @@ options = ARGV.getopts('', 'list:', 'dir:', 'ssh')
 
 read_checkout_list(options['list'])&.each do |repository, branch|
   FileUtils.cd(options['dir'] || rggen_root) do
-    unless Dir.exist?(File.basename(repository))
+    dir_name = File.basename(repository)
+    unless Dir.exist?(dir_name)
       url =
         if options['ssh']
           "git@github.com:#{repository}.git"
@@ -19,6 +20,12 @@ read_checkout_list(options['list'])&.each do |repository, branch|
       command = "git clone --branch=#{branch} #{url}"
       puts command
       system(command) || abort
+    else
+      FileUtils.cd(dir_name) do
+        command = "git pull origin #{branch}"
+        puts command
+        system(command) || abort
+      end
     end
   end
 end
