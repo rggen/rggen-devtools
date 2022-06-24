@@ -2,7 +2,7 @@
 
 RSpec.shared_context 'clean-up builder' do
   after(:all) do
-    RgGen.disable_all
+    RgGen.enable_all
   end
 end
 
@@ -104,6 +104,13 @@ RSpec.shared_context 'register map common' do
 
   before(:all) do
     @register_map_factory ||= []
+  end
+
+  before(:all) do
+    RgGen.enable(:register_block, :__dummy)
+    RgGen.enable(:register_file, :__dummy)
+    RgGen.enable(:register, :__dummy)
+    RgGen.enable(:bit_field, :__dummy)
   end
 
   before(:all) do
