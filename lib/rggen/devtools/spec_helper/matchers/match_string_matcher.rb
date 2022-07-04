@@ -10,7 +10,12 @@ module RgGen
           @actual = nil
 
           match do |actual|
-            @actual = actual.to_s
+            @actual =
+              if actual.respond_to?(:to_code)
+                actual.to_code.to_s
+              else
+                actual.to_s
+              end
             values_match?(expected, @actual)
           end
         end
