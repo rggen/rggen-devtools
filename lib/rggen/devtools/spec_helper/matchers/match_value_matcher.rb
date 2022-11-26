@@ -6,8 +6,15 @@ module RgGen
       module Matchers
         matcher :match_value do |value, position = nil|
           match do |actual|
-            return false unless values_match?(value, actual.value)
-            return false if position && (actual.position != position)
+            actual_value =
+              if actual.respond_to?(:value)
+                actual.value
+              else
+                actual
+              end
+
+            return false unless values_match?(value, actual_value)
+            return false if position && actual.respond_to?(:position) && (actual.position != position)
             true
           end
 
