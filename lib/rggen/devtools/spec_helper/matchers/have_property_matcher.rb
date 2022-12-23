@@ -35,8 +35,16 @@ module RgGen
           define_method(:compare_value) do |component_or_feature, args_and_value|
             return false unless @property_defined
             return true if args_and_value.empty?
-            args = args_and_value.size == 2 ? args_and_value[0] : nil
-            @actual_value = component_or_feature.public_send(property, *args)
+
+            args, kw =
+              if args_and_value.size == 1
+                [[], {}]
+              elsif args_and_value[0].is_a?(Array)
+                [args_and_value[0], {}]
+              elsif args_and_value[0].is_a?(Hash)
+                [[], args_and_value[0]]
+              end
+            @actual_value = component_or_feature.public_send(property, *args, **kw)
             @actual_value = @actual_value.__getobj__ if @actual_value.respond_to?(:__getobj__)
             values_match?(args_and_value[-1], @actual_value)
           end
