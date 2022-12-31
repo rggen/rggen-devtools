@@ -18,7 +18,7 @@ def update_copyright_year(path, ticket)
       system(command)
     end
 
-    command = "git commit --amend -m \"update copyright year #{eto}\n\n(refs: #{ticket})\""
+    command = "git commit -m \"update copyright year #{eto}\n\n(refs: #{ticket})\""
     puts command
     system(command)
   end
