@@ -62,6 +62,9 @@ Style/OptionalBooleanParameter:
 Style/RaiseArgs:
   EnforcedStyle: compact
 
+Style/RegexpLiteral:
+  AllowInnerSlashes: true
+
 Style/SymbolArray:
   EnforcedStyle: brackets
 
