@@ -56,6 +56,9 @@ Style/EmptyMethod:
 Style/FormatStringToken:
   EnforcedStyle: unannotated
 
+Style/OptionalArguments:
+  Enabled: false
+
 Style/OptionalBooleanParameter:
   Enabled: false
 
