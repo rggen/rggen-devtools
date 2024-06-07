@@ -51,6 +51,16 @@ module RgGen
         gem gem_name, **options
       end
 
+      def gem_bundled(gem_name)
+        require File.join(rggen_root, 'stdgems-version/lib/stdgems_version')
+        version = StdgemsVersion.version(gem_name)
+        gem gem_name, version
+      end
+
+      def for_ci
+        ENV.key?('CI') && yield
+      end
+
       private
 
       def extract_gem_name(repository)
