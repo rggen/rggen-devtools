@@ -16,7 +16,7 @@ list = join_path(root, 'rggen-checkout', 'all.yml')
 read_checkout_list(list).each do |repository, _|
   FileUtils.cd(join_path(root, File.basename(repository))) do
     if File.exist?('Rakefile')
-      command = 'rake spec'
+      command = 'bundle exec rake spec'
       puts command
       system(command) || abort
     end
