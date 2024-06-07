@@ -35,7 +35,7 @@ module RgGen
             }
               actual_position.to_s == expected_position.to_s
             else
-              actual_position == expected_position
+              values_match?(expected_position, actual_position)
             end
           end
         end

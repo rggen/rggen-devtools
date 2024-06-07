@@ -14,7 +14,7 @@ module RgGen
               end
 
             return false unless values_match?(value, actual_value)
-            return false if position && actual.respond_to?(:position) && (actual.position != position)
+            return false unless match_position?(position, actual)
             true
           end
 
@@ -26,6 +26,15 @@ module RgGen
               "expected: #{value.inspect}\n"  \
               "     got: #{actual.value.inspect}\n\n"
             end
+          end
+
+          private
+
+          def match_position?(expected_position, actual)
+            return true unless expected_position
+            return true unless actual.respond_to?(:position)
+
+            values_match?(expected_position, actual.position)
           end
         end
       end
