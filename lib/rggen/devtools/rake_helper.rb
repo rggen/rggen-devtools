@@ -5,8 +5,6 @@ require 'rake/tasklib'
 require 'rake/clean'
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
-require 'rubocop/rake_task'
-require 'bump/tasks'
 
 module RgGen
   module Devtools
@@ -28,8 +26,12 @@ module RgGen
       end
 
       def create_tasks
+        unless ENV.key?('CI')
+          require 'bump/tasks'
+          require 'rubocop/rake_task'
+          RuboCop::RakeTask.new(:rubocop)
+        end
         RSpec::Core::RakeTask.new(:spec)
-        RuboCop::RakeTask.new(:rubocop)
         task default: :spec
       end
 
