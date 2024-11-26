@@ -24,9 +24,9 @@ module RgGen
               "     got: #{@actual_args[0]}\n\n"
             else
               message = "file content of #{file_name} was not mathced"
-              ::RSpec::Matchers::ExpectedsForMultipleDiffs
-                .from(content)
-                .message_with_diff(message, ::RSpec::Expectations.differ, @actual_args[1])
+              ::RSpec::Matchers::MultiMatcherDiff
+                .from(content, @actual_args[1])
+                .message_with_diff(message, ::RSpec::Expectations.differ)
             end
           end
 
