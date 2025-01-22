@@ -38,10 +38,6 @@ RSpec.shared_context 'configuration common' do
     @configuration_factory[0].create([''])
   end
 
-  def raise_configuration_error(message, position = nil)
-    raise_rggen_error(RgGen::Core::Configuration::ConfigurationError, message, position)
-  end
-
   def delete_configuration_factory
     @configuration_factory.clear
   end
@@ -82,10 +78,6 @@ RSpec.shared_context 'register map common' do
     RegisterMapDummyLoader.data_block = data_block || proc {}
     @register_map_factory[0] ||= build_register_map_factory(RgGen.builder)
     @register_map_factory[0].create(configuration || default_configuration, [''])
-  end
-
-  def raise_register_map_error(message = nil, position = nil)
-    raise_rggen_error(RgGen::Core::RegisterMap::RegisterMapError, message, position)
   end
 
   def delete_register_map_factory

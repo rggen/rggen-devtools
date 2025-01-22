@@ -45,6 +45,10 @@ module RgGen
             end
           end
         end
+
+        def raise_source_error(message = nil, additional_info = nil)
+          raise_rggen_error(Core::SourceError, message, additional_info)
+        end
       end
     end
   end
