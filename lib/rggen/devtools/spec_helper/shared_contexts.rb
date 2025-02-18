@@ -17,7 +17,7 @@ RSpec.shared_context 'configuration common' do
       true
     end
 
-    def load_file(_file, input_data, _valid_value_lists)
+    def load_file(input_data, _valid_value_lists, _file)
       self.class.values.size.positive? &&
         input_data.values(self.class.values)
       self.class.data_block &&
@@ -63,7 +63,7 @@ RSpec.shared_context 'register map common' do
       true
     end
 
-    def load_file(_file, input_data, _valid_value_lists)
+    def load_file(input_data, _valid_value_lists, _file)
       input_data.__send__(:build_by_block, &self.class.data_block)
     end
   end
