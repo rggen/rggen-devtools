@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-require File.expand_path('../lib/rggen/devtools/gemfile_helper', __dir__)
+source 'https://rubygems.org'
+
+gemspec
+
+require File.expand_path('lib/rggen/devtools/gemfile_helper', __dir__)
 extend RgGen::Devtools::GemfileHelper
 
-gem_rggen 'rggen/rggen-devtools', add_group: false
 install_rggen
 
 group :development_common do
