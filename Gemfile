@@ -4,10 +4,12 @@ source 'https://rubygems.org'
 
 gemspec
 
-require File.expand_path('lib/rggen/devtools/gemfile_helper', __dir__)
-extend RgGen::Devtools::GemfileHelper
-
-install_rggen
+helper = File.expand_path('lib/rggen/devtools/gemfile_helper.rb', __dir__)
+if File.exist?(helper)
+  require helper
+  extend RgGen::Devtools::GemfileHelper
+  install_rggen
+end
 
 group :development_common do
   gem 'bundler', require: false
