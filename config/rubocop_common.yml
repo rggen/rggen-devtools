@@ -32,6 +32,9 @@ Lint/AmbiguousRegexpLiteral:
 Lint/EmptyBlock:
   Enabled: false
 
+Lint/UselessConstantScoping:
+  Enabled: false
+
 Metrics/ClassLength:
   Max: 130
 
