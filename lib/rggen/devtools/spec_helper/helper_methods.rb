@@ -4,6 +4,18 @@ module RgGen
   module Devtools
     module SpecHelper
       module HelperMethods
+        def mock_file_io(filename, content)
+          allow(File).to receive(:readable?).with(filename).and_return(true)
+          io = StringIO.new(content)
+          allow(File).to receive(:open).with(filename, any_args).and_yield(io)
+        end
+
+        def mock_file_read(filename, content, no_args: false, mock_readable: true)
+          allow(File).to receive(:readable?).with(filename).and_return(true) if mock_readable
+          args = no_args && [filename] || [filename, any_args]
+          allow(File).to receive(:read).with(*args).and_return(content)
+        end
+
         def random_updown_case(string)
           string
             .chars

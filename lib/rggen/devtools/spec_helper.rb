@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'stringio'
 require 'regexp-examples'
 require_relative 'spec_helper/helper_methods'
 require_relative 'spec_helper/matchers'
