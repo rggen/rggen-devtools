@@ -21,6 +21,18 @@ RSpec.shared_context 'veryl common' do
       )
   end
 
+  def have_generic(*args, &body)
+    layer, handler, attributes =
+      case args.size
+      when 3 then args[0..2]
+      when 2 then [nil, args[0], args[1]]
+      else [nil, args[0], {}]
+      end
+    attributes = { name: handler }.merge(attributes)
+    generic = RgGen::Veryl::Utility::DataObject.new(:port, **attributes, &body)
+    have_declaration(layer, :generic, generic.declaration).and have_identifier(handler, generic.identifier)
+  end
+
   def have_port(*args, &body)
     layer, handler, attributes =
       case args.size
