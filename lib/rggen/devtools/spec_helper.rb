@@ -4,7 +4,13 @@ require 'stringio'
 require 'regexp-examples'
 require_relative 'spec_helper/helper_methods'
 require_relative 'spec_helper/matchers'
-require_relative 'spec_helper/shared_contexts'
+require_relative 'spec_helper/shared_contexts/clean_up_builder'
+require_relative 'spec_helper/shared_contexts/configuration_common'
+require_relative 'spec_helper/shared_contexts/register_map_common'
+require_relative 'spec_helper/shared_contexts/sv_rtl_common'
+require_relative 'spec_helper/shared_contexts/sv_ral_common'
+require_relative 'spec_helper/shared_contexts/veryl_common'
+require_relative 'spec_helper/shared_contexts/markdown_common'
 
 module RgGen
   module Devtools
