@@ -29,25 +29,33 @@ module RgGen
       end
 
       def read_checkout_list(list_file = nil)
-        list = list_file || find_checkout_list
-        list && YAML.load_file(list) || nil
-      end
+        if list_file
+          load_checkout_list(list)
+        else
+          root = rggen_root
+          repository = repository_name
+          branch = branch_name
 
-      def find_checkout_list
-        root = rggen_root
-        repository = repository_name
-        [*checkout_lists(root, repository), default_checkout_list(root, repository)]
-          .find(&File.method(:exist?))
-      end
+          path = checkout_list_path(root, repository, branch)
+          list = load_checkout_list(path)
+          return list if list
 
-      def checkout_lists(root, repository)
-        [branch_name, 'master'].map do |branch|
-          File.join(root, 'rggen-checkout', repository, "#{branch}.yml")
+          path = checkout_list_path(root, repository, 'master')
+          list = load_checkout_list(path)
+          list&.transform_values { |branches| [branch, *branches] }
         end
       end
 
-      def default_checkout_list(root, repository)
-        File.join(root, repository, 'rggen_checkout.yml')
+      def load_checkout_list(list)
+        return unless File.exist?(list)
+
+        YAML
+          .load_file(list)
+          .transform_values { |branch| [branch] }
+      end
+
+      def checkout_list_path(root, repository, branch)
+        File.join(root, 'rggen-checkout', repository, "#{branch}.yml")
       end
     end
   end

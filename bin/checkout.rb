@@ -7,7 +7,19 @@ extend RgGen::Devtools::CheckoutListUtils
 
 options = ARGV.getopts('', 'list:', 'dir:', 'ssh')
 
-read_checkout_list(options['list'])&.each do |repository, branch|
+def exist_branch?(branch)
+  command = "git branch -r | grep #{branch}"
+  system(command)
+end
+
+def run_command(command)
+  puts command
+  abort unless system(command)
+
+  true
+end
+
+read_checkout_list(options['list'])&.each do |repository, branches|
   FileUtils.cd(options['dir'] || rggen_root) do
     dir_name = File.basename(repository)
     unless Dir.exist?(dir_name)
@@ -17,14 +29,24 @@ read_checkout_list(options['list'])&.each do |repository, branch|
         else
           "https://github.com/#{repository}.git"
         end
-      command = "git clone --branch=#{branch} #{url}"
-      puts command
-      system(command) || abort
+
+      command = "git clone #{url}"
+      run_command(command)
+
+      FileUtils.cd(dir_name) do
+        branches.each do |branch|
+          next if branch == 'master' || !exist_branch?(branch)
+
+          command = "git switch #{branch}"
+          break if run_command(command)
+        end
+      end
     else
       FileUtils.cd(dir_name) do
-        command = "git pull origin #{branch}"
-        puts command
-        system(command) || abort
+        branches.each do |branch|
+          command = "git pull origin #{branch}"
+          break if run_command(command)
+        end
       end
     end
   end
