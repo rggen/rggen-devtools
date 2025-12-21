@@ -111,6 +111,19 @@ RSpec.shared_context 'sv rtl common' do
     have_declaration(layer, :parameter, parameter.declaration).and have_identifier(handler, parameter.identifier)
   end
 
+  def not_have_parameter(*args, &body)
+    layer, handler, attributes =
+      if args.size == 3
+        args[0..2]
+      elsif args.size == 2
+        [nil, *args[0..1]]
+      else
+        [nil, args[0], {}]
+      end
+    parameter = RgGen::SystemVerilog::Common::Utility::DataObject.new(:parameter, **attributes, &body)
+    not_have_declaration(layer, :parameter, parameter.declaration).and not_have_identifier(handler, parameter.identifier)
+  end
+
   before(:all) do
     @sv_rtl_factory ||= []
   end
