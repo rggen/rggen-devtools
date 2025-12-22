@@ -81,6 +81,18 @@ RSpec.shared_context 'veryl common' do
     have_declaration(layer, :parameter, param.declaration).and have_identifier(handler, param.identifier)
   end
 
+  def not_have_param(*args, &body)
+    layer, handler, attributes =
+      case args.size
+      when 3 then args[0..2]
+      when 2 then [nil, args[0], args[1]]
+      else [nil, args[0], {}]
+      end
+    attributes = { name: handler }.merge(attributes)
+    param = RgGen::Veryl::Utility::DataObject.new(:param, **attributes, &body)
+    not_have_declaration(layer, :parameter, param.declaration).and not_have_identifier(handler, param.identifier)
+  end
+
   def have_const(*args, &body)
     layer, handler, attributes =
       case args.size
