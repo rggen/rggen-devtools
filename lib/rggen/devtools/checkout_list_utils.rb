@@ -30,7 +30,7 @@ module RgGen
 
       def read_checkout_list(list_file = nil)
         if list_file
-          load_checkout_list(list)
+          load_checkout_list(list_file)
         else
           root = rggen_root
           repository = repository_name
@@ -51,7 +51,7 @@ module RgGen
 
         YAML
           .load_file(list)
-          .transform_values { |branch| [branch] }
+          &.transform_values { |branch| [branch] }
       end
 
       def checkout_list_path(root, repository, branch)
