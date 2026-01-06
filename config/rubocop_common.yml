@@ -14,9 +14,6 @@ Layout/EndOfLine:
 Layout/LineEndStringConcatenationIndentation:
   Enabled: false
 
-Layout/LineLength:
-  Max: 90
-
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
 
@@ -58,9 +55,6 @@ Style/EmptyMethod:
 
 Style/FormatStringToken:
   EnforcedStyle: unannotated
-
-Style/OptionalArguments:
-  Enabled: false
 
 Style/OptionalBooleanParameter:
   Enabled: false
